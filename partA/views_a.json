@@ -1,0 +1,18 @@
+{
+  "_id": "_design/stats",
+  "language": "javascript",
+  "views": {
+    "movies_per_genre": {
+      "map": "function (doc) { if (Array.isArray(doc.genres)) { doc.genres.forEach(function (g) { emit(g, 1); }); } }",
+      "reduce": "_count"
+    },
+    "movies_per_actor": {
+      "map": "function (doc) { if (Array.isArray(doc.actors)) { doc.actors.forEach(function (a) { emit(a, 1); }); } }",
+      "reduce": "_count"
+    },
+    "actor_genre": {
+      "map": "function (doc) { if (Array.isArray(doc.actors) && Array.isArray(doc.genres)) { doc.actors.forEach(function (a) { doc.genres.forEach(function (g) { emit([a, g], 1); }); }); } }",
+      "reduce": "_count"
+    }
+  }
+}

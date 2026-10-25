@@ -1,0 +1,14 @@
+{
+  "_id": "_design/stats",
+  "language": "javascript",
+  "views": {
+    "movies_per_genre": {
+      "map": "function (doc) { if (doc.type === 'movie' && Array.isArray(doc.genres)) { doc.genres.forEach(function (g) { emit(g, 1); }); } }",
+      "reduce": "_count"
+    },
+    "movies_per_actor": {
+      "map": "function (doc) { if (doc.type === 'cast') { emit(doc.actor_id, 1); } }",
+      "reduce": "_count"
+    }
+  }
+}
